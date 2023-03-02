@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alertas Recebidos</title>
+    <!-- Adicione os links para os arquivos CSS do Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1>Alertas Recebidos</h1>
+      <hr>
+      {% if alerts %}
+        <div id="alert-container">
+          {% for alert in alerts %}
+            <div class="alert alert-danger" role="alert">
+              Alerta {{ alert.name }} disparado! Detalhes: {{ alert.description }}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>Nenhum alerta recebido ainda.</p>
+      {% endif %}
+    </div>
+    <!-- Adicione os links para os arquivos JavaScript do Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
+

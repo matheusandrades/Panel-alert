@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #555;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.alertname {
+  font-weight: bold;
+}
+
+
+  </style>
+  <title>Gráficos de Alertas</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Severidade</th>
+        <th>Alerta</th>
+        <th>Quantidade</th>
+      </tr>
+    </thead>
+    <tbody id="alert-table-body">
+    </tbody>
+  </table>
+  
+</html>
+
+
+  <script>
+ // Cria uma função para atualizar os gráficos com os dados recebidos
+
+// Faz a requisição AJAX para obter os dados dos alertas
+// Faz a requisição AJAX para obter os dados dos alertas
+fetch('/data')
+  .then(response => response.json())
+  .then(data => {
+    // Cria uma tabela com os dados dos alertas
+    const tableBody = document.getElementById('alert-table-body');
+    data.forEach(alert => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${alert.severity}</td>
+        <td>${alert.alertname}</td>
+        <td>${alert.count}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+  });
+A
+
+
+
+  </script>
+</body>
+</html>
+

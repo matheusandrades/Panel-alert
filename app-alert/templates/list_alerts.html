@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+  <style>
+    /* Estilo para o título da página */
+    h1 {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 36px;
+    }
+
+    /* Estilo para os botões */
+    .button {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px;
+      background-color: #428bca;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .button-firing {
+      background-color: #d9534f;
+    }
+
+    /* Estilo para a tabela */
+    table {
+      border-collapse: collapse;
+      margin: auto;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #428bca;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    /* Estilo para o campo de seleção de severidade */
+    label {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    select {
+      font-size: 18px;
+      padding: 5px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+  </style>
+  <title>Lista de Alertas</title>
+</head>
+
+<body>
+  <h1>Lista de Alertas</h1>
+
+
+
+  <table id="alerts-table">
+    <thead>
+      <tr>
+        <th>Status</th>
+        <th>Alert Name</th>
+        <th>Instance</th>
+        <th>Severity</th>
+        <th>Starts At</th>
+        <th>Ends At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data %}
+      <tr id="{{ row[0] }}">
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[5] }}</td>
+        <td>{{ row[6] }}</td>
+        <td>{{ row[7] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <script>
+  $(document).ready(function() {
+  // Inicializa o DataTable
+  var table = $('#alerts-table').DataTable({
+    // Define as opções de internacionalização
+    language: {
+      url: 'https://cdn.datatables.net/plug-ins/1.10.25/i18n/Portuguese-Brasil.json'
+    }
+  });
+
+  // Remove o campo de seleção de severidade original
+  $('#severity').remove();
+
+  // Adiciona o novo campo de filtro para a coluna de severidade
+  var select = $('<select><option value=""></option></select>')
+  .insertAfter('#severity')
+  .on('change', function () {
+    var val = $(this).val();
+    table.columns().search(val ? '^' + $(this).val() + '$' : '', true, false).draw();
+
+  });
+
+  // Preenche o campo de filtro com as opções de severidade
+  table.column(3).data().unique().sort().each(function (d, j) {
+    select.append('<option value="' + d + '">' + d + '</option>')
+  });
+
+  function flashRows() {
+    var fourHoursAgo = new Date();
+    fourHoursAgo.setHours(fourHoursAgo.getHours() - 4);
+
+    $("tr").each(function () {
+      var startsAtString = $(this).find("td:nth-child(5)").text();
+      var startsAt = new Date(startsAtString);
+      if (startsAt >= fourHoursAgo) {
+        $(this).addClass("flash");
+      }
+    });
+  }
+
+  // Chama a função para fazer as linhas piscarem
+  flashRows();
+});
+
+  </script>
+  
+   
+</body>
+</html>
