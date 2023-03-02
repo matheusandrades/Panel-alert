@@ -1,1 +1,14 @@
 # Panel-alert
+
+
+
+CREATE TABLE alertas (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  status VARCHAR(100) NOT NULL,
+  alertname VARCHAR(100) NOT NULL,
+  instance VARCHAR(100) NOT NULL,
+  job VARCHAR(100) NOT NULL,
+  severity VARCHAR(100) NOT NULL,
+  startsAt VARCHAR(100) NOT NULL,
+  endsAt VARCHAR(100)
+);
