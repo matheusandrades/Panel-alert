@@ -1,0 +1,4 @@
+Flask==2.1.2
+mysqlclient==2.1.0
+flask_mysqldb
+datetime
